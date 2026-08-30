@@ -1,43 +1,18 @@
-栖屋 NestHome 家居独立站 · 部署状态（2026-08-30 更新）
-================================================
+NestHome 家居独立站 · 当前部署状态（2026-08-30）
 
-【结论】vercel.app 在中国大陆被墙，国内浏览器无法访问。
-        已切换为「静态导出 → 阿里云 OSS + CDN」方案，国内可正常访问。
+【海外通道 · Vercel】
+  地址：https://nesthome-storefront.vercel.app
+  更新：推送 GitHub 自动部署（Root Directory=storefront 已修正）
 
-📦 代码仓库（GitHub，永久托管来源）：
-https://github.com/aquamos14/nesthome-storefront
+【国内通道 · Gitee Pages（免费）】
+  地址：https://aquamos.gitee.io/
+  状态：静态文件已推送至 gitee.com/aquamos/aquamos.gitee.io 根目录
+        需在 Gitee 网页「服务 → Gitee Pages → 启动」一次后生效
+        免费版每次更新需回 Gitee 点「更新」
 
-── 静态导出产物（已验证）──
-- 构建方式：storefront/next.config.mjs 已开启 output:"export"
-- 产物目录：storefront/out/  （23 个页面，目录式 index.html）
-- 本地冒烟测试：首页/列表/详情/购物车/结算/账户/搜索 全部 200，
-  404 页正常，_next 静态资源可加载 → 静态站生产可用。
+【源码】
+  https://github.com/aquamos14/nesthome-storefront
 
-── 阿里云 OSS + CDN（目标生产部署，待执行）──
-- 上传脚本：storefront/deploy-oss.sh（已就绪）
-- 配置模板：storefront/.env.oss.example（复制为 .env.oss 填 AK）
-- 执行命令：
-    cd storefront
-    npm run build
-    source .env.oss && bash deploy-oss.sh
-- 之后在 OSS 控制台开启「静态页面托管」(index.html / 404.html)，
-  并绑定阿里云 CDN 加速域名即可公网访问。
-
-── Vercel（仅海外预览，国内被墙，不用于生产）──
-- 项目：nesthome-storefront（状态 READY）
-- 默认域名：https://nesthome-storefront.vercel.app  ← 国内打不开
-- 访问保护：已关闭（ssoProtection=null，无登录墙）
-- 说明：海外可访问；境内因 vercel.app 被墙不可用，故不作为生产地址。
-
-── 后续步骤 ──
-1. 提供阿里云 OSS 的 AccessKey / Bucket / Endpoint（.env.oss），
-   即可由本工具一键上传到 OSS 并完成部署；
-   或由你按 DEPLOY.md「三、部署到阿里云 OSS + CDN」手动上传 + 绑 CDN。
-2. （可选）自定义域名：在 CDN/域名商处做 CNAME 解析到 CDN 加速地址。
-3. 接 Medusa 全栈（可选）：部署 backend/ 后填
-   NEXT_PUBLIC_MEDUSA_BACKEND_URL / NEXT_PUBLIC_MEDUSA_PK 重新部署。
-
-技术说明：
-- 框架：Next.js 14（App Router），基于 Medusa 官方 Next.js Starter 架构
-- 构建：本地静态导出（out/，23 个页面）
-- 数据：默认本地 products.json（零依赖），可一键切换 Medusa 后端
+【说明】
+  vercel.app 在中国大陆被墙，故国内走 Gitee Pages 免费通道。
+  Gitee Pages 免费版不支持 API 自动部署，更新需手动点「更新」。
